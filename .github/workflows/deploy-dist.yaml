@@ -17,7 +17,7 @@ jobs:
                 node-version: 22
             - name: print node version
               run: node -v
-            - name: install Dependencies
+            - name: Install Dependencies
               run: npm install
             - name: Run Tests
               run: npm run test
