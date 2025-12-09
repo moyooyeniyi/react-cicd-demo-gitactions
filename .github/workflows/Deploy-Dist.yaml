@@ -1,5 +1,5 @@
 name: Deploy Dist folder
-on: push
+on: [push, workflow_dispatch]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -10,7 +10,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
            node-version: 22
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        id: cache
+        with:
+            path: node_modules
+            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
+        if: steps.cache.outposts.cache-hit != 'true'
         run: npm install
       - name: Run Tests
         run: npm run test
